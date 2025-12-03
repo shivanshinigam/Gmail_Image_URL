@@ -10,7 +10,7 @@ This project builds a small HTTP API where:
 
 - You pass a Gmail ID in the URL
 - The API returns a mapped Google image URL (or any image URL you configure)
-- 
+
 Example:
 
 http://127.0.0.1:5000/get-photo?email=shivanshi@gmail.com
@@ -50,8 +50,11 @@ The browser will display ONLY the URL as plain text.
  ------------------------------------------------------------------------------
 
  Language   : Python 3
+ 
  Framework  : Flask
+ 
  Environment: Local Machine
+ 
  Client     : Browser / curl / Postman
 
  ------------------------------------------------------------------------------
@@ -65,6 +68,8 @@ The browser will display ONLY the URL as plain text.
 
  Output:
    Only the image URL (plain text)
+
+<img width="834" height="102" alt="Screenshot 2025-12-03 at 1 23 22 PM" src="https://github.com/user-attachments/assets/8427f1e0-8bba-478f-bf1b-89573b81997e" />
 
  ------------------------------------------------------------------------------
  5. Step-by-Step Setup (From Zero)
@@ -100,28 +105,26 @@ source venv/bin/activate
 pip install flask
 
  ------------------------------------------------------------------------------
- 5.5 Create app.py (Paste Code Below)
+ 5.5 Create app.py 
  ------------------------------------------------------------------------------
 
-cat > app.py << 'EOF'
-from flask import Flask, request
+    from flask import Flask, request
 
-app = Flask(__name__)
-
-# Demo mapping: Gmail ID -> Image URL
-EMAIL_TO_IMAGE = {
-    "shivanshi@gmail.com": "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
-    "mentor@gmail.com": "https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png",
-    "testuser@gmail.com": "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg"
-}
-
-@app.route("/")
-def home():
-    return "Email -> Google Image URL API is running"
-
-@app.route("/get-photo", methods=["GET"])
-def get_photo():
-    email = request.args.get("email")
+    app = Flask(__name__)
+    
+    EMAIL_TO_IMAGE = {
+        "shivanshi@gmail.com": "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+        "mentor@gmail.com": "https://upload.wikimedia.org/wikipedia/commons/7/72/Default-welcomer.png",
+        "testuser@gmail.com": "https://upload.wikimedia.org/wikipedia/commons/3/34/PICA.jpg"
+    }
+    
+    @app.route("/")
+    def home():
+        return "Email -> Google Image URL API is running"
+    
+    @app.route("/get-photo", methods=["GET"])
+    def get_photo():
+        email = request.args.get("email")
 
     if not email:
         return (
@@ -135,9 +138,9 @@ def get_photo():
 
     return image_url, 200
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
-EOF
+    if __name__ == "__main__":
+        app.run(host="0.0.0.0", port=5000, debug=True)
+
 
  ------------------------------------------------------------------------------
  6. Run the API Server
